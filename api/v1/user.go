@@ -5,7 +5,6 @@ import (
 	"MiMengCore/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"time"
 )
 
 func Register(c *gin.Context) {
@@ -24,39 +23,12 @@ func Register(c *gin.Context) {
 	password := reg.Password
 	qq := reg.QQ
 
-	// 校验用户ID
-	valid, msg := service.CheckUserID(userID)
+	// 校验用户信息
+	valid, msg := service.ValidateUser(reg.UserID, reg.UserName, reg.Password, reg.QQ)
 	if !valid {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": 400,
 			"msg":  msg,
-		})
-		return
-	}
-
-	// 校验用户名
-	if !service.CheckUserName(userName) {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": 400,
-			"msg":  "用户名格式不正确",
-		})
-		return
-	}
-
-	// 校验密码
-	if !service.CheckPassword(password) {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": 400,
-			"msg":  "密码格式不正确",
-		})
-		return
-	}
-
-	// 校验QQ
-	if !service.CheckQQ(qq) {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": 400,
-			"msg":  "QQ格式不正确",
 		})
 		return
 	}
@@ -66,7 +38,6 @@ func Register(c *gin.Context) {
 		UserName: userName,
 		Password: password,
 		QQ:       qq,
-		VipDate:  time.Now(),
 		IsAdmin:  false,
 		Points:   0,
 	}

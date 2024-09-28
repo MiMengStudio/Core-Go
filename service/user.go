@@ -64,6 +64,32 @@ func GenerateToken(user *model.User) (string, error) {
 	return tokenString, nil
 }
 
+// ValidateUser 校验用户信息是否有效
+func ValidateUser(userID string, userName string, password string, qq int) (bool, string) {
+	// 校验用户ID
+	valid, msg := CheckUserID(userID)
+	if !valid {
+		return false, msg
+	}
+
+	// 校验用户名
+	if !CheckUserName(userName) {
+		return false, "用户名格式不正确"
+	}
+
+	// 校验密码
+	if !CheckPassword(password) {
+		return false, "密码格式不正确"
+	}
+
+	// 校验QQ
+	if !CheckQQ(qq) {
+		return false, "QQ格式不正确"
+	}
+
+	return true, ""
+}
+
 // validateUserID 检查用户ID是否只包含数字、字母和下划线
 func validateUserID(userID string) bool {
 	//ID在6~20位之间
