@@ -1,6 +1,14 @@
 package config
 
-const ADDR, PORT, USER, PASSWORD, DATABASE = "ip", "port", "user", "password", "database"
+import "os"
+
+var (
+	DB_ADDR     = os.Getenv("DB_ADDR")
+	DB_PORT     = os.Getenv("DB_PORT")
+	DB_USER     = os.Getenv("DB_USER")
+	DB_PASSWORD = os.Getenv("DB_PASSWORD")
+	DB_DATABASE = os.Getenv("DB_DATABASE")
+)
 
 // token var
 var (

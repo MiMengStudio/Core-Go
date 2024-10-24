@@ -14,7 +14,7 @@ import (
 )
 
 func InitMySQL() {
-	addr, port, username, password, database := config.ADDR, config.PORT, config.USER, config.PASSWORD, config.DATABASE
+	addr, port, username, password, database := config.DB_ADDR, config.DB_PORT, config.DB_USER, config.DB_PASSWORD, config.DB_DATABASE
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", username, password, addr, port, database)
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
