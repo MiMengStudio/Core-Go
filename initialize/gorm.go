@@ -3,6 +3,7 @@ package initialize
 import (
 	"MiMengCore/config"
 	"MiMengCore/global"
+	"MiMengCore/model"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -34,4 +35,23 @@ func InitMySQL() {
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Println("Connected to MySQL database successfully")
+
+	// 获取 migrator
+	migrator := global.DB.Migrator()
+
+	// 检查 content 表是否存在
+	if !migrator.HasTable(&model.Content{}) {
+		// 创建 content 表
+		err = migrator.CreateTable(&model.Content{})
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("Content table created")
+	} else {
+		fmt.Println("Content table already exists")
+	}
+
+	fmt.Println()
 }

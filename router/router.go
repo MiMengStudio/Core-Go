@@ -19,8 +19,8 @@ func InitRouter(Router *gin.RouterGroup) {
 func InitRouter(Router *gin.RouterGroup) {
 	ContentRouter := Router.Group("/content")
 	{
-		ContentRouter.GET("/notice", v1.GetNotice)
-		ContentRouter.PUT("/notice", v1.UpdateNotice)
+		ContentRouter.GET("/notice", v1.GetNoticeHandler)
+		ContentRouter.PUT("/notice", v1.UpdateNoticeHandler)
 	}
 
 	UserRouter := Router.Group("/user")
